@@ -17055,6 +17055,17 @@ For those 12 images, the error was 2 out of 12, or <strong>16,6%</strong><br/>
 Those errors were as follows:<br/>
 <strong>Image 0:</strong> Cropped no entry sign, turned out as complex task for network. It means that in real application sign should be identified from multiple frames and probability should be checked, because from multiple frames there are larger chances that there will be no obstructions. As an alternative and probably for more critical signs, e.g. stop , yield, pedestrians, etc, the network should be also trained for partial images.<br/>
 <strong>Image 8:</strong> Should have been identified as "Turn right ahead", but was identified as "Ahead only". THis is more critical error as sign was with relatively good shape. Checking the number of samples in the training set revealed that sign that was returned from prediction had almost twice as many samples. Therefore in order to avoid such issues, the number of samples in the data set should be made more equally distributed.<br/></p>
+<p><strong>Update after review 27/12/2016:</strong>
+The model does not perform on captured data as well as the test set due to several factors:</p>
+<ol>
+<li>Quality of the captured images. Some images taken with worse quality with intention to check if he model could recognize them. As model could not predict correctly those images, then the accuracty is therefore lower.<br/>
+Also the quality on the training and test set was on more similar level.<br/></li>
+<li>Region specific signs or their features. Although signs takes are also from the European region, still there are small differences in the shapes and features of the images in comparison to training set. For example pedestrian crossing sign that was taken was with additional yellow highlight area in comparison to standart sign, that made the model to predict incorrectly. <br/>
+This could turn out to be bigger issue when the real code is being launched on cars, because there are many differences in various regions starting from color differences (e.g. Sweden arning signs has yellow background whereas in other European countries it is white) to the signs with texts on them (e.g. Australia).<br/>
+This is also because training set consisted on the same set as test set. It would be necessary to obtain local signs and use them for training to get higher accuracy.<br/></li>
+<li>Amount of data per sign in the training set. This was observed with straight only and straight or right images. If one of the signs has much higher frequency in the training set, then also it is predicted more in the captured set.<br/>
+Data in the training set should be selected more accuratelly to have more similar number of categoty images, especially for the similar signs.</li>
+</ol>
 
 </div>
 </div>
